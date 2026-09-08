@@ -93,8 +93,8 @@ export default async function KeywordOverviewPage({ searchParams }: { searchPara
   const historyId = params.history_id;
 
   const rawKeywords = params.keywords ?? '';
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
   const location = params.location ?? defaultLocation;
   const language = params.language ?? defaultLanguage;
 

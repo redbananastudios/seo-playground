@@ -172,8 +172,8 @@ export default function KeywordDataForm({ defaults }: Props) {
           </label>
           <LocationPicker
             name="location"
-            defaultValue={defaults.location || 'France'}
-            placeholder="e.g. France, Paris"
+            defaultValue={defaults.location || 'United Kingdom'}
+            placeholder="e.g. United Kingdom, London"
             className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800"
           />
         </div>
@@ -184,8 +184,8 @@ export default function KeywordDataForm({ defaults }: Props) {
           <input
             type="text"
             name="language"
-            defaultValue={defaults.language || 'French'}
-            placeholder="e.g. French, English"
+            defaultValue={defaults.language || 'English'}
+            placeholder="e.g. English"
             className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800"
           />
         </div>

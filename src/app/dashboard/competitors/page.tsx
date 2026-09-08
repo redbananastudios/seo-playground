@@ -1,5 +1,5 @@
 import {
-  getCredentials,
+  getCredentials, getSetting,
   getCompetitorsHistory,
   saveCompetitorsSearch,
   getCompetitorsResults,
@@ -80,8 +80,8 @@ export default async function CompetitorsPage({ searchParams }: { searchParams: 
   const historyId = params.history_id;
 
   const target = params.target?.trim() ?? '';
-  const location = params.location ?? 'France';
-  const language = params.language ?? 'French';
+  const location = params.location ?? (getSetting('default_location') || 'United Kingdom');
+  const language = params.language ?? (getSetting('default_language') || 'English');
   const limit = Math.min(parseInt(params.limit ?? '20', 10) || 20, 100);
 
   let items: CompetitorItem[] = [];

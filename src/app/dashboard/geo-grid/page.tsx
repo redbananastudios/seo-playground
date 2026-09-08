@@ -48,6 +48,8 @@ export default async function GeoGridPage({ searchParams }: { searchParams: Prom
 
   const defaultLanguage = getSetting('default_language') ?? 'English';
   const defaultCoordinates = getSetting('default_coordinates') ?? '';
+  const savedKeywords = [...new Set((getSetting('grid_keywords') ?? '').split('\n').map((k) => k.trim()).filter(Boolean))];
+  const businessName = getSetting('business_name');
 
   let gridResults: GridPoint[] | null = null;
   let gridEntry: GridSearchEntry | null = null;
@@ -146,7 +148,7 @@ export default async function GeoGridPage({ searchParams }: { searchParams: Prom
     forceGridMode: true,
     gridSize: (params.grid_size ?? gridEntry?.grid_size ?? '5').toString(),
     spacingKm: (params.spacing_km ?? gridEntry?.spacing_km ?? '1').toString(),
-    gridTarget: (params.grid_target ?? gridEntry?.target ?? '').toString(),
+    gridTarget: (params.grid_target ?? gridEntry?.target ?? getSetting('default_domain') ?? '').toString(),
     queueMode: (params.queue_mode ?? gridEntry?.queue_mode ?? 'live').toString(),
   };
 
@@ -204,6 +206,20 @@ export default async function GeoGridPage({ searchParams }: { searchParams: Prom
 
       <div className="flex flex-col lg:flex-row gap-6 items-start">
         <div className="flex-1 min-w-0 space-y-6">
+          {savedKeywords.length > 0 && (
+            <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 space-y-3">
+              <h2 className="font-bold text-slate-900 dark:text-white">{businessName ? `${businessName} — saved keywords` : 'Saved keywords'}</h2>
+              <p className="text-sm text-slate-500">Choose a keyword to fill the scan form. Loading it does not run or charge for a scan.</p>
+              <form action="/dashboard/geo-grid" method="get" className="flex flex-wrap gap-3">
+                <select name="keyword" aria-label="Saved grid keyword" defaultValue={formDefaults.keyword} className="min-w-0 flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 p-3 text-slate-900 dark:text-white">
+                  <option value="">Choose a saved keyword</option>
+                  {savedKeywords.map((keyword) => <option key={keyword} value={keyword}>{keyword}</option>)}
+                </select>
+                <button type="submit" className="rounded-lg bg-slate-900 dark:bg-blue-600 px-4 py-2 text-white font-bold">Load keyword</button>
+              </form>
+              <p className="text-xs text-slate-500">{savedKeywords.length} saved · <a href="/dashboard/settings" className="underline">Edit keywords in Settings</a></p>
+            </section>
+          )}
           <LocalFinderForm defaults={formDefaults} />
 
           <div id="results">

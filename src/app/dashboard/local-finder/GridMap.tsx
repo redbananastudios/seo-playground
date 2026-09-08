@@ -1,5 +1,7 @@
 'use client';
 
+import { escapeHtml } from '@/lib/html';
+
 import { useEffect, useRef } from 'react';
 import type { GridPoint } from '@/lib/db';
 import { competitorKey } from './grid-insights';
@@ -32,6 +34,7 @@ function rankTextColor(rank: number): string {
 }
 
 function buildPopupHtml(point: GridPoint, target: string, highlightKey?: string): string {
+  if (point.error) return '<p>Scan failed at this point. Ranking unavailable.</p>';
   const items = point.items ?? [];
 
   const itemRows = items.slice(0, 20).map((item) => {
@@ -51,15 +54,15 @@ function buildPopupHtml(point: GridPoint, target: string, highlightKey?: string)
         ? 'background:#eff6ff;border-left:3px solid #3b82f6;padding-left:5px;margin-left:-5px;border-radius:2px;'
         : '';
     const mapsHref = item.cid
-      ? `https://www.google.com/maps?cid=${item.cid}`
+      ? `https://www.google.com/maps?cid=${encodeURIComponent(item.cid)}`
       : `https://www.google.com/maps/search/${encodeURIComponent(item.title)}`;
     const mapsLink = `<a href="${mapsHref}" target="_blank" rel="noopener noreferrer" style="font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:0.06em;color:#3b82f6;text-decoration:none;white-space:nowrap;margin-top:2px;display:inline-block">Maps ↗</a>`;
     return `
       <div style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #f1f5f9;${rowBg}">
         <span style="font-size:12px;font-weight:900;min-width:24px;color:${rankColor_}">#${item.rank_group}</span>
         <div style="flex:1;min-width:0">
-          <div style="font-size:12px;${nameStyle};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${item.title}</div>
-          ${item.domain ? `<div style="font-size:10px;color:#94a3b8;margin-top:1px">${item.domain}</div>` : ''}
+          <div style="font-size:12px;${nameStyle};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${escapeHtml(item.title)}</div>
+          ${item.domain ? `<div style="font-size:10px;color:#94a3b8;margin-top:1px">${escapeHtml(item.domain)}</div>` : ''}
           <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
             ${stars ? `<div style="margin-top:1px">${stars}</div>` : ''}
             ${mapsLink}
@@ -75,7 +78,7 @@ function buildPopupHtml(point: GridPoint, target: string, highlightKey?: string)
   return `
     <div style="font-family:system-ui,-apple-system,sans-serif;min-width:230px;max-width:260px">
       <p style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin:0 0 6px">
-        Target: <span style="color:#334155">${target}</span>
+        Target: <span style="color:#334155">${escapeHtml(target)}</span>
       </p>
       ${itemRows}${emptyMsg}
     </div>`;
@@ -131,8 +134,8 @@ export default function GridMap({ points, gridSize, target, highlightKey, highli
       geoPoints.forEach((point) => {
         const isCenter = point.row === half && point.col === half;
         const rank = pointRank(point, highlightKey);
-        const color = rankColor(rank);
-        const label = rank != null ? String(rank) : '—';
+        const color = point.error ? '#7c3aed' : rankColor(rank);
+        const label = point.error ? '!' : rank != null ? String(rank) : '—';
 
         const border = isCenter
           ? `border: 3px dashed rgba(255,255,255,0.85);`

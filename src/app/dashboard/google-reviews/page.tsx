@@ -517,8 +517,8 @@ function StatCard({ label, value, sub }: { label: string; value: string; sub?: s
 export default async function GoogleReviewsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const creds = getCredentials();
   const params = await searchParams;
-  const defaultLocation = getSetting('default_location') ?? 'France';
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = getSetting('default_location') ?? 'United Kingdom';
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   // Auto-poll: check tasks_ready on every load and fetch ready tasks
   if (creds) {
@@ -693,7 +693,7 @@ export default async function GoogleReviewsPage({ searchParams }: { searchParams
             <LocationPicker
               name="location"
               defaultValue={defaultLocation}
-              placeholder="e.g. France, Paris"
+              placeholder="e.g. United Kingdom, London"
               className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-500 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -703,7 +703,7 @@ export default async function GoogleReviewsPage({ searchParams }: { searchParams
               type="text"
               name="language"
               defaultValue={defaultLanguage}
-              placeholder="e.g. French"
+              placeholder="e.g. English"
               className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-500 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

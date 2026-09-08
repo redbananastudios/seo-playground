@@ -60,8 +60,8 @@ export default async function KeywordDifficultyPage({ searchParams }: { searchPa
   const params = await searchParams;
   const historyId = params.history_id;
 
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   const keywords = params.keywords?.trim() ?? '';
   const location = params.location ?? defaultLocation;

@@ -115,8 +115,8 @@ export async function removeDomainAction(formData: FormData) {
 export async function addKeywordAction(formData: FormData) {
   const raw = (formData.get('keywords') as string) ?? '';
   const domain = (formData.get('domain') as string)?.trim();
-  const location = (formData.get('location') as string)?.trim() || 'France';
-  const language = (formData.get('language') as string)?.trim() || 'French';
+  const location = (formData.get('location') as string)?.trim() || 'United Kingdom';
+  const language = (formData.get('language') as string)?.trim() || 'English';
 
   if (!domain) return;
   addTargetDomain(domain);

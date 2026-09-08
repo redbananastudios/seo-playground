@@ -67,8 +67,8 @@ function Bar({ value, max, color }: { value: number; max: number; color: string 
 export default async function HistoricalRankPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const creds = getCredentials();
   const history = getHistRankHistory();
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
   const defaultDomain = getSetting('default_domain') ?? '';
 
   const params = await searchParams;

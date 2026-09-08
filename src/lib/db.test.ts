@@ -10,13 +10,14 @@ const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dfsui-db-test-'));
 process.env.DB_PATH = path.join(tmpDir, 'test.db');
 
 import {
-  getSetting, setSetting, deleteSetting,
+  getSetting, setSetting, deleteSetting, closeDatabase,
   getCredentials, saveCredentials, clearCredentials,
   getAiOptimizationHistory, saveAiOptimizationSearch, getAiOptimizationResults, type AiOptimizationEntry,
   getWebMentionsHistory, saveWebMentionsSearch, getWebMentionsItems, getWebMentionsSummary, type WebMentionsEntry,
 } from './db';
 
 afterAll(() => {
+  closeDatabase();
   fs.rmSync(tmpDir, { recursive: true, force: true });
 });
 

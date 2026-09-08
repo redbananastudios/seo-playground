@@ -83,13 +83,13 @@ async function requestGridPoint(
 
 export async function fetchOneGridPoint(
   keyword: string, lat: number, lng: number, language: string, auth: string,
-): Promise<{ items: LocalPackItem[]; cost: number }> {
+): Promise<{ items: LocalPackItem[]; cost: number; error?: string }> {
   let result = await requestGridPoint(keyword, lat, lng, language, auth);
   if (result.error) {
     // Transient failures (timeouts, rate limiting) are common under concurrent load; retry once.
     result = await requestGridPoint(keyword, lat, lng, language, auth);
   }
-  return { items: result.items, cost: result.cost };
+  return result;
 }
 
 export async function fetchGridSearch(
@@ -108,7 +108,7 @@ export async function fetchGridSearch(
   const pointResults = await mapWithConcurrency(
     coords, 6,
     async ({ row, col, lat, lng }) => {
-      const { items: rawItems, cost } = await fetchOneGridPoint(keyword, lat, lng, language, auth);
+      const { items: rawItems, cost, error } = await fetchOneGridPoint(keyword, lat, lng, language, auth);
 
       const isTarget = (item: LocalPackItem) =>
         (item.title ?? '').toLowerCase().includes(targetLower) ||
@@ -127,7 +127,7 @@ export async function fetchGridSearch(
         is_target: isTarget(item),
       }));
 
-      return { point: { row, col, lat, lng, rank: match ? match.rank_group : null, items }, cost };
+      return { point: { row, col, lat, lng, rank: match ? match.rank_group : null, items, ...(error ? { error } : {}) }, cost };
     },
   );
 

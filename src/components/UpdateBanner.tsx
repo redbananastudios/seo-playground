@@ -29,16 +29,16 @@ export default function UpdateBanner() {
   return (
     <div className="flex items-center justify-between gap-4 px-8 py-2 bg-indigo-600 text-white text-sm">
       <span>
-        A new version is available —{' '}
+        Upstream changes are available —{' '}
         <a
           href="https://github.com/paulmassen/seo-playground"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-2 font-semibold hover:opacity-80"
         >
-          git pull
+          review changes
         </a>{' '}
-        to update.
+        before updating this fork.
       </span>
       <button
         onClick={dismiss}

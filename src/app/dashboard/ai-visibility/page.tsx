@@ -227,8 +227,8 @@ export default async function AiVisibilityPage({ searchParams }: { searchParams:
   const targetType = (params.target_type === 'domain' ? 'domain' : 'keyword') as 'keyword' | 'domain';
   const platform = ['google', 'chat_gpt'].includes(params.platform ?? '') ? params.platform! : 'chat_gpt';
   const limit = Math.min(Math.max(parseInt(params.limit ?? '10', 10) || 10, 1), 50);
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
   const location = platform === 'chat_gpt' ? 'United States' : (params.location ?? defaultLocation);
   const language = platform === 'chat_gpt' ? 'English' : (params.language ?? defaultLanguage);
   const dateFrom = params.date_from ?? '';
