@@ -12,6 +12,7 @@ export interface GridSummary {
 
 /** Same stats shown in the results view (ATO score, avg rank, top 3/10 counts) — shared so history previews stay consistent. */
 export function computeGridSummary(results: GridPoint[]): GridSummary {
+  results = results.filter((p) => !p.error);
   const totalPoints = results.length;
   const ranked = results.filter((p) => p.rank !== null);
   const top3Count = results.filter((p) => p.rank !== null && p.rank <= 3).length;
@@ -48,6 +49,7 @@ export interface CompetitorSummary {
 
 /** Ranks every non-target business seen across the grid by how often and how highly it shows up. */
 export function computeCompetitors(results: GridPoint[]): CompetitorSummary[] {
+  results = results.filter((p) => !p.error);
   const totalPoints = results.length;
   const byKey = new Map<string, {
     name: string; domain?: string; cid?: string; ranks: number[]; ratings: number[];
@@ -101,6 +103,7 @@ export interface RingStat {
 
 /** Buckets grid points into concentric rings around the center and summarizes rank per ring — reveals how far the target's visibility actually reaches. */
 export function computeRingStats(results: GridPoint[], gridSize: number, spacingKm: number): RingStat[] {
+  results = results.filter((p) => !p.error);
   const half = Math.floor(gridSize / 2);
   const byRing = new Map<number, GridPoint[]>();
 

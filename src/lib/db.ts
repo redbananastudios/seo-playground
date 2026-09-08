@@ -4,6 +4,11 @@ import fs from 'fs';
 
 let _db: Database.Database | null = null;
 
+export function closeDatabase(): void {
+  _db?.close();
+  _db = null;
+}
+
 function getDb(): Database.Database {
   if (!_db) {
     _db = new Database(process.env.DB_PATH ?? path.join(process.cwd(), 'seo-playground.db'));
@@ -677,6 +682,11 @@ export function deleteSetting(key: string): void {
 // --- Credentials ---
 
 export function getCredentials(): { login: string; pass: string } | null {
+  if (credentialsAreManaged()) {
+    const login = process.env.DATAFORSEO_LOGIN;
+    const pass = process.env.DATAFORSEO_PASSWORD;
+    return login && pass ? { login, pass } : null;
+  }
   const login = getSetting('dfs-login');
   const pass = getSetting('dfs-pass');
   if (!login || !pass) return null;
@@ -684,13 +694,19 @@ export function getCredentials(): { login: string; pass: string } | null {
 }
 
 export function saveCredentials(login: string, pass: string): void {
+  if (credentialsAreManaged()) throw new Error('Credentials are managed on the server.');
   setSetting('dfs-login', login);
   setSetting('dfs-pass', pass);
 }
 
 export function clearCredentials(): void {
+  if (credentialsAreManaged()) throw new Error('Credentials are managed on the server.');
   deleteSetting('dfs-login');
   deleteSetting('dfs-pass');
+}
+
+export function credentialsAreManaged(): boolean {
+  return process.env.DATAFORSEO_LOGIN !== undefined || process.env.DATAFORSEO_PASSWORD !== undefined;
 }
 
 // --- Target domains ---
@@ -1311,6 +1327,7 @@ export interface GridPoint {
   lat?: number;
   lng?: number;
   rank: number | null;
+  error?: string;
   items?: GridLocalItem[];
 }
 
@@ -1325,6 +1342,8 @@ function summarizeGridResults(resultsJson: string | null): GridHistorySummary | 
   }
   const totalPoints = points.length;
   if (totalPoints === 0) return undefined;
+  // Incomplete scans have no comparable history score.
+  if (points.some((p) => p.error)) return undefined;
   const ranked = points.filter((p) => p.rank !== null);
   const top3Count = points.filter((p) => p.rank !== null && p.rank <= 3).length;
   const avgRank = ranked.length > 0

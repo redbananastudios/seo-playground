@@ -72,7 +72,7 @@ export async function GET(
         const rawItems = task.status_code === 20000
           ? (task.result?.[0]?.items ?? []).filter((i) => i.type === 'local_pack')
           : [];
-        return { tp, ready: true, items: rawItems };
+        return { tp, ready: true, items: rawItems, error: task.status_code === 20000 ? undefined : task.status_message ?? 'Provider task failed' };
       } catch {
         // Network timeout or fetch error → not ready, will retry next poll
         return { tp, ready: false, items: [] };
@@ -109,6 +109,7 @@ export async function GET(
     newlyReady.push({
       row: check.tp.row, col: check.tp.col, lat: check.tp.lat, lng: check.tp.lng,
       rank: match ? match.rank_group : null, items: gridItems,
+      ...('error' in check && check.error ? { error: check.error } : {}),
     });
   }
 

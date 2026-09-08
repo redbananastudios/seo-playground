@@ -2,7 +2,8 @@ import { getCredentials } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 interface DFUserResponse {
-  tasks?: Array<{ result?: Array<{ money?: { balance?: number } }> }>;
+  status_code?: number;
+  tasks?: Array<{ status_code?: number; result?: Array<{ money?: { balance?: number } }> }>;
 }
 
 let cachedBalance: string | null = null;
@@ -25,7 +26,11 @@ export async function GET() {
     });
     if (res.ok) {
       const data = await res.json() as DFUserResponse;
-      const balance = (data.tasks?.[0]?.result?.[0]?.money?.balance ?? 0).toFixed(2);
+      const returnedBalance = data.tasks?.[0]?.result?.[0]?.money?.balance;
+      if (data.status_code !== 20000 || data.tasks?.[0]?.status_code !== 20000 || typeof returnedBalance !== 'number') {
+        return NextResponse.json({ balance: null, error: 'Connection check failed' }, { status: 502 });
+      }
+      const balance = returnedBalance.toFixed(2);
       cachedBalance = balance;
       cacheExpiry = now + CACHE_TTL;
       return NextResponse.json({ balance });
@@ -34,5 +39,5 @@ export async function GET() {
     // fall through
   }
 
-  return NextResponse.json({ balance: '0.00' });
+  return NextResponse.json({ balance: null, error: 'Connection check failed' }, { status: 502 });
 }

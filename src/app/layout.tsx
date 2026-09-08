@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SEO Playground",
   description: "Local SEO dashboard powered by DataForSEO",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({

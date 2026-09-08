@@ -146,7 +146,7 @@ export default async function GeoGridPage({ searchParams }: { searchParams: Prom
     forceGridMode: true,
     gridSize: (params.grid_size ?? gridEntry?.grid_size ?? '5').toString(),
     spacingKm: (params.spacing_km ?? gridEntry?.spacing_km ?? '1').toString(),
-    gridTarget: (params.grid_target ?? gridEntry?.target ?? '').toString(),
+    gridTarget: (params.grid_target ?? gridEntry?.target ?? getSetting('default_domain') ?? '').toString(),
     queueMode: (params.queue_mode ?? gridEntry?.queue_mode ?? 'live').toString(),
   };
 

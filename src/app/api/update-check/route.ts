@@ -6,7 +6,7 @@ const BRANCH = 'main';
 export const revalidate = 3600; // cache 1 hour
 
 export async function GET() {
-  const current = process.env.NEXT_PUBLIC_GIT_COMMIT ?? 'unknown';
+  const current = process.env.NEXT_PUBLIC_UPSTREAM_BASE ?? 'unknown';
 
   try {
     const res = await fetch(

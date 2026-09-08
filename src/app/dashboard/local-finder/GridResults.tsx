@@ -27,6 +27,8 @@ function rankColor(rank: number | null): string {
 }
 
 export default function GridResults({ results, gridSize, spacingKm, keyword, target, cost }: Props) {
+  const failedCount = results.filter((p) => p.error).length;
+  const successfulPoints = results.length - failedCount;
   const [highlight, setHighlight] = useState<CompetitorSummary | null>(null);
 
   const { foundCount, top3Count: top3, top10Count: top10, avgRank, ato } = computeGridSummary(results);
@@ -48,27 +50,28 @@ export default function GridResults({ results, gridSize, spacingKm, keyword, tar
 
   return (
     <div className="space-y-4">
+      {failedCount > 0 && <p role="alert" className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">{failedCount} of {results.length} points failed. Failed points are marked ! and excluded from scores. This scan is incomplete.</p>}
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-white border border-slate-200 rounded-2xl px-4 py-3">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">ATO Score</p>
-          <p className="text-2xl font-black text-slate-900 mt-0.5 tabular-nums">{ato}%</p>
+          <p className="text-2xl font-black text-slate-900 mt-0.5 tabular-nums">{successfulPoints ? `${ato}%` : 'Unavailable'}</p>
           <p className="text-[10px] text-slate-400 mt-0.5">Local visibility</p>
         </div>
         <div className="bg-white border border-slate-200 rounded-2xl px-4 py-3">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Avg rank</p>
           <p className="text-2xl font-black text-slate-900 mt-0.5 tabular-nums">{avgRank ?? '—'}</p>
-          <p className="text-[10px] text-slate-400 mt-0.5">{foundCount}/{results.length} points found</p>
+          <p className="text-[10px] text-slate-400 mt-0.5">{foundCount}/{successfulPoints} successful points found</p>
         </div>
         <div className="bg-white border border-slate-200 rounded-2xl px-4 py-3">
           <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Top 3</p>
           <p className="text-2xl font-black text-emerald-600 mt-0.5 tabular-nums">{top3}</p>
-          <p className="text-[10px] text-slate-400 mt-0.5">of {results.length} points</p>
+          <p className="text-[10px] text-slate-400 mt-0.5">of {successfulPoints} successful points</p>
         </div>
         <div className="bg-white border border-slate-200 rounded-2xl px-4 py-3">
           <p className="text-[10px] font-black uppercase tracking-widest text-blue-600">Top 10</p>
           <p className="text-2xl font-black text-blue-600 mt-0.5 tabular-nums">{top10}</p>
-          <p className="text-[10px] text-slate-400 mt-0.5">of {results.length} points</p>
+          <p className="text-[10px] text-slate-400 mt-0.5">of {successfulPoints} successful points</p>
         </div>
       </div>
 
@@ -240,13 +243,13 @@ export default function GridResults({ results, gridSize, spacingKm, keyword, tar
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Distribution (grid without coordinates)</p>
           <div className="inline-grid gap-1" style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}>
             {results.map((p, i) => {
-              const color = rankColor(p.rank);
+              const color = p.error ? '#7c3aed' : rankColor(p.rank);
               const half = Math.floor(gridSize / 2);
               const isCenter = p.row === half && p.col === half;
               return (
                 <div
                   key={i}
-                  title={p.rank != null ? `#${p.rank}` : 'Not found'}
+                  title={p.error ? 'Scan failed' : p.rank != null ? `#${p.rank}` : 'Not found'}
                   style={{
                     width: 36, height: 36,
                     background: color,
@@ -256,7 +259,7 @@ export default function GridResults({ results, gridSize, spacingKm, keyword, tar
                     fontSize: 11, fontWeight: 900, color: 'white',
                   }}
                 >
-                  {p.rank ?? '—'}
+                  {p.error ? '!' : p.rank ?? '—'}
                 </div>
               );
             })}
