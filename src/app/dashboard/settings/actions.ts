@@ -18,8 +18,14 @@ export async function updateSettings(formData: FormData) {
   if (defaultCoordinates !== undefined) setSetting('default_coordinates', defaultCoordinates);
   if (defaultLanguage !== undefined) setSetting('default_language', defaultLanguage);
   if (defaultDomain !== undefined) setSetting('default_domain', defaultDomain);
+  const gridKeywords = formData.get('grid_keywords');
+  if (typeof gridKeywords === 'string') {
+    const keywords = [...new Set(gridKeywords.split('\n').map((k) => k.trim()).filter(Boolean))].slice(0, 100);
+    setSetting('grid_keywords', keywords.join('\n'));
+  }
 
   revalidatePath('/dashboard/settings');
+  revalidatePath('/dashboard/geo-grid');
 }
 
 export async function deleteCredentials() {

@@ -9,3 +9,5 @@ Preserve upstream features and Local Finder ranking; add Maps as a separate sour
 Project lesson: derive Marley identity from the existing site configuration before seeding settings; its domain is `marleymoves.co.uk`. Close SQLite before test-directory cleanup on Windows.
 
 UK default correction: SERP, ranked keywords, competitors and keyword data now honour saved location/language; generic fallbacks are UK/English. Stop the standalone process before rebuilding on Windows to release output-file locks.
+
+Marley setup: 20 saved Geo-Grid keywords (editable in Settings) and 30 organic tracked terms populated from the existing commercial register/local SEO plan. Live SQLite backed up before import; scan history retained. Loading a keyword is GET-only form population and must not trigger provider calls. Source and scope: docs/marley-keywords.md.

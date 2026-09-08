@@ -129,6 +129,12 @@ export default async function SettingsPage() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <label htmlFor="grid-keywords" className="block text-xs font-bold text-slate-700 dark:text-slate-200">Saved Geo-Grid keywords</label>
+              <textarea id="grid-keywords" name="grid_keywords" rows={10} defaultValue={getSetting('grid_keywords') ?? ''} className={inputCls} />
+              <p className="text-xs text-slate-500">One keyword per line, up to 100. Saving this list does not run scans or schedule them.</p>
+            </div>
+
             <button type="submit" className="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 shadow-xl shadow-blue-200 dark:shadow-none transition-all active:scale-[0.98]">
               Save Settings
             </button>
