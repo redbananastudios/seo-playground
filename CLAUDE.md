@@ -1,13 +1,25 @@
 @AGENTS.md
 
-## Current State — 2026-09-08
+## Current State
 
-Private bootstrap on `feat/marley-bootstrap`, based on upstream/fork main `d7db1f5`. Working checkout: `M:\MarleyMoves\operations\marley-seo-bootstrap`; clean main checkout: `M:\MarleyMoves\operations\marley-seo\app`. Preview: http://i9:3033; local login note and persistent SQLite live under `M:\MarleyMoves\data\seo-playground`. Never print provider secrets.
+Last touched: 2026-09-08 on i9 — private Marley preview working; local SEO scope and integration options documented.
 
-Preserve upstream features and Local Finder ranking; add Maps as a separate source later. No customer OAuth, tenant isolation, scheduler or comparison UI yet. See `docs/private-preview.md`. No paid scans were run during bootstrap; the free account check succeeded. Tests mock paid endpoints.
+### Where we left off
 
-Project lesson: derive Marley identity from the existing site configuration before seeding settings; its domain is `marleymoves.co.uk`. Close SQLite before test-directory cleanup on Windows.
+- Branch `feat/marley-bootstrap`; draft PR https://github.com/redbananastudios/seo-playground/pull/1 targets the RBS fork main. No merge authorised by the scope discussion.
+- UK/English defaults, 20 editable grid keywords and 30 organic tracked terms are populated. Peter's completed grid scan is retained. No paid scans were started by the agent.
+- Last source validation: 37 tests, production build/type/lint checks passed (nine existing unused-variable warnings); browser verified saved keyword loading and Settings persistence without starting a scan.
+- Current capabilities and proposed simplification/integration are in `docs/local-seo-scope.md`; setup is in `docs/private-preview.md`, keyword provenance in `docs/marley-keywords.md`.
+- GBP OAuth, exact listing matching, reliable scan jobs, scheduling, date comparisons and SEO-OS export remain unbuilt. SEO-OS automation stays paused.
 
-UK default correction: SERP, ranked keywords, competitors and keyword data now honour saved location/language; generic fallbacks are UK/English. Stop the standalone process before rebuilding on Windows to release output-file locks.
+### Where things actually live now
 
-Marley setup: 20 saved Geo-Grid keywords (editable in Settings) and 30 organic tracked terms populated from the existing commercial register/local SEO plan. Live SQLite backed up before import; scan history retained. Loading a keyword is GET-only form population and must not trigger provider calls. Source and scope: docs/marley-keywords.md.
+Worktree: `M:\MarleyMoves\operations\marley-seo-bootstrap`; primary checkout: `M:\MarleyMoves\operations\marley-seo\app`. Preview: http://i9:3033. Persistent SQLite and private login note: `M:\MarleyMoves\data\seo-playground`. Brain hub: `O:\brain\01_Projects\Marley Moves\README.md`. Work tracking: Marley Moves ClickUp lists resolved through `O:\RBS-OS\projects.json`; Session Logs doc `2kxurxup-532`. Canonical decisions: `O:\RBS-OS\decisions\log.md`.
+
+### Active open decisions
+
+- Confirm the proposed local-first navigation and next implementation milestone.
+- Google Maps display timing; separate Google Maps ranking source timing.
+- Whether to bridge scan results to SEO-OS before adding broader GBP management.
+
+No blockers to the private preview. Public/customer deployment requires further access isolation and operational work. Stop the standalone server before rebuilding on Windows; see the runbook. Never print provider secrets.
