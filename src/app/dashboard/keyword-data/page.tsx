@@ -1,4 +1,4 @@
-import { getCredentials, getKdHistory, saveKdSearch, getKdResults, type KdHistoryEntry } from '@/lib/db';
+import { getCredentials, getSetting, getKdHistory, saveKdSearch, getKdResults, type KdHistoryEntry } from '@/lib/db';
 import KeywordDataForm from './KeywordDataForm';
 import KeywordDataTable from './KeywordDataTable';
 import { stableSearchId } from '@/lib/dedupe';
@@ -140,8 +140,8 @@ export default async function KeywordDataPage({ searchParams }: { searchParams: 
   const formDefaults = {
     se: sourceParams.se ?? 'google_ads', seType: sourceParams.se_type ?? 'search_volume',
     keywords: sourceParams.keywords ?? '', target: sourceParams.target ?? '',
-    targetType: sourceParams.target_type ?? 'site', location: sourceParams.location ?? 'France',
-    language: sourceParams.language ?? 'French', searchPartners: sourceParams.search_partners ?? 'false',
+    targetType: sourceParams.target_type ?? 'site', location: sourceParams.location ?? (getSetting('default_location') || 'United Kingdom'),
+    language: sourceParams.language ?? (getSetting('default_language') || 'English'), searchPartners: sourceParams.search_partners ?? 'false',
     includeAdult: sourceParams.include_adult_keywords ?? 'false', device: sourceParams.device ?? 'all',
     dateFrom: sourceParams.date_from ?? '', dateTo: sourceParams.date_to ?? '',
     sortBy: sourceParams.sort_by ?? 'relevance',

@@ -38,8 +38,8 @@ function formatDate(ts: number) { return new Date(ts).toLocaleDateString('en-GB'
 export default async function SearchIntentPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const creds = getCredentials();
   const params = await searchParams;
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   const rawKeywords = params.keywords?.trim() ?? '';
   const location = params.location ?? defaultLocation;

@@ -110,7 +110,7 @@ export const LABS_LOCATIONS = [
  * name, so pull the country segment out of that string — checked from the end, since country is
  * always last — and fall back if none of the segments match a supported Labs country.
  */
-export function toLabsCountry(location: string, fallback = 'France'): string {
+export function toLabsCountry(location: string, fallback = 'United Kingdom'): string {
   const segments = location.split(',').map((s) => s.trim()).filter(Boolean);
   for (let i = segments.length - 1; i >= 0; i--) {
     const match = LABS_LOCATIONS.find((l) => l.name.toLowerCase() === segments[i].toLowerCase());

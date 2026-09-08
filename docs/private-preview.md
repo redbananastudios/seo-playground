@@ -14,7 +14,7 @@ On i9, persistent data and the private login note are under `M:\MarleyMoves\data
 
 ## Build and start
 
-Run `npm ci`, `npm test`, `npx tsc --noEmit`, `npm run lint`, then `npm run build`. For Next.js standalone output, copy `public` to `.next/standalone/public` and `.next/static` to `.next/standalone/.next/static`. Load the private environment into the server process, set `HOSTNAME=0.0.0.0` and the allocated `PORT`, then run `node .next/standalone/server.js`. Start background processes with a hidden window on Windows. The current preview is manually started, not registered for automatic reboot recovery.
+Stop the running standalone server before rebuilding this checkout: Windows locks its output files. Run `npm ci`, `npm test`, `npx tsc --noEmit`, `npm run lint`, then `npm run build`. For Next.js standalone output, copy `public` to `.next/standalone/public` and `.next/static` to `.next/standalone/.next/static`. Load the private environment into the server process, set `HOSTNAME=0.0.0.0` and the allocated `PORT`, then run `node .next/standalone/server.js`. Start background processes with a hidden window on Windows. The current preview is manually started, not registered for automatic reboot recovery.
 
 Stop the app before copying the SQLite database and its WAL files for backup; retain backups outside Git. Test restoration before relying on it. Never remove the persistent data directory when cleaning a worktree.
 

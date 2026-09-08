@@ -120,8 +120,8 @@ export default async function TopSearchesPage({ searchParams }: { searchParams: 
   const params = await searchParams;
   const historyId = params.history_id;
 
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   const location = params.location ?? defaultLocation;
   const language = params.language ?? defaultLanguage;

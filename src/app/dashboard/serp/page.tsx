@@ -1,4 +1,4 @@
-import { getCredentials, getTargetDomains, getSerpHistory, saveSerpSearch, getSerpResults, type SerpHistoryEntry, type TargetHit } from '@/lib/db';
+import { getCredentials, getSetting, getTargetDomains, getSerpHistory, saveSerpSearch, getSerpResults, type SerpHistoryEntry, type TargetHit } from '@/lib/db';
 import { LANGUAGES } from '@/lib/geo-options';
 import LocationPicker from '@/components/LocationPicker';
 import { addDomainAction, removeDomainAction } from './actions';
@@ -59,8 +59,8 @@ export default async function SerpPage({ searchParams }: { searchParams: Promise
   const params = await searchParams;
   const historyId = params.history_id;
   const keyword = params.keyword?.trim() ?? '';
-  const location = params.location ?? 'France';
-  const language = params.language ?? 'French';
+  const location = params.location ?? (getSetting('default_location') || 'United Kingdom');
+  const language = params.language ?? (getSetting('default_language') || 'English');
   const device = params.device ?? 'desktop';
   const depth = Math.min(parseInt(params.depth ?? '10', 10) || 10, 100);
 

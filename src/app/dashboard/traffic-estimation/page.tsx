@@ -42,8 +42,8 @@ function TrafficBar({ value, max }: { value?: number; max: number }) {
 export default async function TrafficEstimationPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const creds = getCredentials();
   const params = await searchParams;
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   const rawTargets = params.targets?.trim() ?? '';
   const location = params.location ?? defaultLocation;

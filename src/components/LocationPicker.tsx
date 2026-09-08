@@ -127,7 +127,7 @@ export default function LocationPicker({ name, defaultValue = '', placeholder, r
         onChange={(e) => handleChange(e.target.value)}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        placeholder={placeholder ?? (scope === 'labs' ? 'e.g. France' : 'e.g. Paris, France')}
+        placeholder={placeholder ?? (scope === 'labs' ? 'e.g. United Kingdom' : 'e.g. London, United Kingdom')}
         required={required}
         disabled={disabled}
         autoComplete="off"

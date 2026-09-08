@@ -41,8 +41,8 @@ async function fetchIntersection(target1: string, target2: string, location: str
 export default async function DomainIntersectionPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const creds = getCredentials();
   const history = getDomainIntersectionHistory();
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
   const defaultDomain = getSetting('default_domain') ?? '';
 
   const params = await searchParams;

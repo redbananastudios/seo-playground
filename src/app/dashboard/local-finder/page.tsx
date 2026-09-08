@@ -75,7 +75,7 @@ export default async function LocalFinderPage({ searchParams }: { searchParams: 
   const params = await searchParams;
   const historyId = params.history_id;
 
-  const defaultLocation = getSetting('default_location') ?? 'France';
+  const defaultLocation = getSetting('default_location') ?? 'United Kingdom';
   const defaultLanguage = getSetting('default_language') ?? 'English';
   const defaultCoordinates = getSetting('default_coordinates') ?? '';
 

@@ -1,5 +1,5 @@
 import {
-  getCredentials,
+  getCredentials, getSetting,
   getRankedKwHistory,
   saveRankedKwSearch,
   getRankedKwResults,
@@ -116,8 +116,8 @@ export default async function RankedKeywordsPage({ searchParams }: { searchParam
   const historyId = params.history_id;
 
   const target = params.target?.trim() ?? '';
-  const location = params.location ?? 'France';
-  const language = params.language ?? 'French';
+  const location = params.location ?? (getSetting('default_location') || 'United Kingdom');
+  const language = params.language ?? (getSetting('default_language') || 'English');
   const limit = Math.min(parseInt(params.limit ?? '100', 10) || 100, 1000);
   const orderBy = params.order_by ?? 'ranked_serp_element.serp_item.rank_group,asc';
   const maxPosition = params.max_position ? parseInt(params.max_position, 10) : null;

@@ -110,11 +110,11 @@ export default async function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Default Location</label>
-                  <LocationPicker name="default_location" defaultValue={defaultLocation} placeholder="e.g. France, Paris" className={inputCls} />
+                  <LocationPicker name="default_location" defaultValue={defaultLocation} placeholder="e.g. United Kingdom, London" className={inputCls} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Default Language</label>
-                  <input name="default_language" type="text" defaultValue={defaultLanguage} placeholder="e.g. French" className={inputCls} />
+                  <input name="default_language" type="text" defaultValue={defaultLanguage} placeholder="e.g. English" className={inputCls} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Default Coordinates</label>

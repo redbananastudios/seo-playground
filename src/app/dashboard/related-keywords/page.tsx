@@ -64,8 +64,8 @@ export default async function RelatedKeywordsPage({ searchParams }: { searchPara
   const params = await searchParams;
   const historyId = params.history_id;
 
-  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'France');
-  const defaultLanguage = getSetting('default_language') ?? 'French';
+  const defaultLocation = toLabsCountry(getSetting('default_location') ?? 'United Kingdom');
+  const defaultLanguage = getSetting('default_language') ?? 'English';
 
   const keyword = params.keyword?.trim() ?? '';
   const location = params.location ?? defaultLocation;
